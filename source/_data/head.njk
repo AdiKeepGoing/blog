@@ -1,0 +1,42 @@
+<script>
+function showBuyMeCoffeeQR() {
+  var modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;justify-content:center;align-items:center;';
+  modal.onclick = function() {
+    document.body.removeChild(modal);
+  };
+  
+  var imgContainer = document.createElement('div');
+  imgContainer.style.cssText = 'background:white;padding:20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.3);text-align:center;';
+  imgContainer.onclick = function(e) {
+    e.stopPropagation();
+  };
+  
+  var img = document.createElement('img');
+  img.src = '/images/QRcode.jpg';
+  img.style.cssText = 'max-width:300px;max-height:300px;';
+  
+  var title = document.createElement('p');
+  title.textContent = 'Buy Me a Coffee';
+  title.style.cssText = 'margin-top:15px;font-size:18px;font-weight:bold;color:#333;';
+  
+  var desc = document.createElement('p');
+  desc.textContent = '扫码支持一下吧~';
+  desc.style.cssText = 'margin-top:5px;font-size:14px;color:#666;';
+  
+  var closeBtn = document.createElement('button');
+  closeBtn.textContent = '关闭';
+  closeBtn.style.cssText = 'margin-top:15px;padding:8px 24px;background:#333;color:white;border:none;border-radius:5px;cursor:pointer;';
+  closeBtn.onclick = function(e) {
+    e.stopPropagation();
+    document.body.removeChild(modal);
+  };
+  
+  imgContainer.appendChild(img);
+  imgContainer.appendChild(title);
+  imgContainer.appendChild(desc);
+  imgContainer.appendChild(closeBtn);
+  modal.appendChild(imgContainer);
+  document.body.appendChild(modal);
+}
+</script>
