@@ -14,7 +14,7 @@ cache:
   enable: true
 
 # Remove unnecessary files after hexo generate.
-minify: false
+minify: true
 
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
@@ -347,7 +347,7 @@ calendar:
 
 # Preload styles and preconnect CDN for fonts and plugins.
 # For more information: https://www.w3.org/TR/resource-hints/#preconnect
-preconnect: false
+preconnect: true
 
 # Set the text alignment in posts / pages.
 text_align:
@@ -604,7 +604,7 @@ mediumzoom: false
 
 # Vanilla JavaScript plugin for lazyloading images.
 # For more information: https://apoorv.pro/lozad.js/demo/
-lazyload: false
+lazyload: true
 
 # Automatically insert whitespace between CJK and half-width characters.
 # For more information: https://github.com/vinta/pangu.js
@@ -638,7 +638,7 @@ quicklink:
 # For more information: https://animate.style
 motion:
   enable: true
-  async: false
+  async: true
   duration: 200
   transition:
     # All available transition variants: https://theme-next.js.org/animate/
@@ -687,7 +687,7 @@ comments:
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
-  lazyload: false
+  lazyload: true
   # Modify texts or order for any naves, here are some examples.
   nav:
     #disqus:
