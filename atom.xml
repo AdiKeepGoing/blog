@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, ADI</rights>
   <subtitle>悟已往之不谏，知来者之可追</subtitle>
   <title>ADI's Blog</title>
-  <updated>2026-07-21T08:05:50.744Z</updated>
+  <updated>2026-07-21T11:39:31.119Z</updated>
   <entry>
     <author>
       <name>ADI</name>
@@ -26,7 +26,7 @@
     <published>2026-07-20T02:14:48.000Z</published>
     <summary>📌设计模板，测试博客模板通用性</summary>
     <title>The second blog-example</title>
-    <updated>2026-07-21T08:05:50.744Z</updated>
+    <updated>2026-07-21T11:39:31.119Z</updated>
   </entry>
   <entry>
     <author>
@@ -44,6 +44,6 @@
     <published>2026-07-20T01:49:46.000Z</published>
     <summary>记录我的技术学习、项目实践与成长历程。</summary>
     <title>The first blog!</title>
-    <updated>2026-07-21T08:05:50.744Z</updated>
+    <updated>2026-07-21T11:39:31.119Z</updated>
   </entry>
 </feed>
