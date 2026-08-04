@@ -10,7 +10,23 @@
   <rights>All rights reserved 2026, ADI</rights>
   <subtitle>悟已往之不谏，知来者之可追</subtitle>
   <title>ADI's Blog</title>
-  <updated>2026-08-04T07:37:38.141Z</updated>
+  <updated>2026-08-04T12:30:00.758Z</updated>
+  <entry>
+    <author>
+      <name>ADI</name>
+    </author>
+    <category term="学习笔记" scheme="https://missadi.cc/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="机器学习" scheme="https://missadi.cc/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <content>
+      <![CDATA[<h1 id="ML01"><a href="#ML01" class="headerlink" title="ML01"></a>ML01</h1><p><strong>ML algorithms</strong></p><ul><li>Supervised learning(j监督学习)</li><li>Unsupervised learning（无监督学习）</li></ul><h2 id="Supervised-learning"><a href="#Supervised-learning" class="headerlink" title="Supervised learning"></a>Supervised learning</h2><p><strong>定义</strong></p><ul><li>input ———&gt; output，Learns from  data <strong>labeled</strong> with the “right answers”.</li><li>监督学习算法类型：Regression algorithms(回归算法)、classification algorithms(分类算法)</li><li>其中，回归算法是预测多种可能的输出，分类算法是预测可能的小部分输出</li></ul><h2 id="Unsupervised-learning"><a href="#Unsupervised-learning" class="headerlink" title="Unsupervised learning"></a>Unsupervised learning</h2><p><strong>定义</strong></p><ul><li>Find something interesting in <strong>unlabeled</strong> data.</li><li>无监督学习算法类型：clustering algorithms(聚类算法)、Anomaly detection（异常检测）、Dimensionality reduction(降维)</li><li>聚类算法：应用于新闻分类、用户分类等。异常检测：用于寻找不同寻常的数据点，应用于金融系统的欺诈检测等。降维：将大数据集压缩为小得多的数据集</li></ul><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><p><strong>术语</strong></p><ul><li>训练集</li><li>（输入变量[输入标签]，输出变量[目标变量]）</li><li>y-hat指的是，y的预测值或者预估值</li><li>f(x)&#x3D;wx+b，这里的w和b是为常数，也被称为系数或者权重</li><li>示例</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"># 1. 创建模拟数据</span><br><span class="line"># x: 房子的占地面积 (平方米)</span><br><span class="line"># y: 房子的价格 (万元)</span><br><span class="line">np.random.seed(0)</span><br><span class="line">x = 20 + 80 * np.random.rand(100, 1)  # 占地面积在20到100平方米之间</span><br><span class="line">y = 50 + 2 * x + 30 * np.random.randn(100, 1) # 价格 = 50 + 2*面积 + 随机噪音</span><br><span class="line"></span><br><span class="line"># 确保价格不为负数</span><br><span class="line">y = np.maximum(y, 10) </span><br><span class="line"></span><br><span class="line"># 2. 创建线性回归模型</span><br><span class="line">model = LinearRegression()</span><br><span class="line"></span><br><span class="line"># 3. 训练模型</span><br><span class="line">model.fit(x, y)</span><br><span class="line"></span><br><span class="line"># 4. 获取模型参数</span><br><span class="line"># 截距 (Intercept)</span><br><span class="line">intercept = model.intercept_[0]</span><br><span class="line"># 系数 (Coefficient)</span><br><span class="line">coefficient = model.coef_[0][0]</span><br><span class="line"></span><br><span class="line">print(f&quot;线性回归模型参数：&quot;)</span><br><span class="line">print(f&quot;截距 (y轴截距): &#123;intercept:.2f&#125;&quot;)</span><br><span class="line">print(f&quot;系数 (面积对价格的影响): &#123;coefficient:.2f&#125;&quot;)</span><br><span class="line"></span><br><span class="line"># 5. 进行预测</span><br><span class="line"># 假设我们想预测一个面积为 70 平方米的房子的价格</span><br><span class="line">area_to_predict = np.array([[70]])</span><br><span class="line">predicted_price = model.predict(area_to_predict)[0][0]</span><br><span class="line"></span><br><span class="line">print(f&quot;\n预测一个面积为 &#123;area_to_predict[0][0]&#125; 平方米的房子的价格： &#123;predicted_price:.2f&#125; 万元&quot;)</span><br><span class="line"></span><br><span class="line"># 6. 可视化结果</span><br><span class="line">plt.figure(figsize=(10, 6))</span><br><span class="line">plt.scatter(x, y, color=&#x27;blue&#x27;, label=&#x27;实际房屋数据&#x27;)</span><br><span class="line">plt.plot(x, model.predict(x), color=&#x27;red&#x27;, label=&#x27;回归线&#x27;)</span><br><span class="line">plt.scatter(area_to_predict, predicted_price, color=&#x27;green&#x27;, s=100, zorder=5, label=&#x27;预测点&#x27;)</span><br><span class="line"></span><br><span class="line">plt.title(&#x27;线性回归模型：房屋面积与价格预测&#x27;)</span><br><span class="line">plt.xlabel(&#x27;占地面积 (平方米)&#x27;)</span><br><span class="line">plt.ylabel(&#x27;价格 (万元)&#x27;)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.grid(True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure><p>结果输出：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">线性回归模型参数：</span><br><span class="line">截距 (y轴截距): 57.14</span><br><span class="line">系数 (面积对价格的影响): 1.98</span><br></pre></td></tr></table></figure><p><img data-src="E:\blog\my-blog\pictures\01.png" alt="01"></p><p><strong>代价函数</strong></p><ul><li>通过预测y-hat和目标值y的差值，即（y-hat - y），以此衡量预测值与目标值之间的偏差。<br>$$<br>J(w, b) &#x3D; \frac{1}{2m} \sum_{i&#x3D;1}^{m} (h_w(x^{(i)}) - y^{(i)})^2<br>$$<br>平方误差代价函数。目标是，选择w和b，使J（w,b）的值最小。</li></ul>]]>
+    </content>
+    <id>https://missadi.cc/2026/08/04/ML01-md/</id>
+    <link href="https://missadi.cc/2026/08/04/ML01-md/"/>
+    <published>2026-08-04T15:39:56.000Z</published>
+    <summary>📌开始机器学习方面理论知识的了解</summary>
+    <title>ML01.md</title>
+    <updated>2026-08-04T12:30:00.758Z</updated>
+  </entry>
   <entry>
     <author>
       <name>ADI</name>
@@ -25,7 +41,7 @@
     <published>2026-08-04T15:15:45.000Z</published>
     <summary>📌英语口语练习速度有点太慢了，需要辅以研究生阶段的学习</summary>
     <title>NextPlan.md</title>
-    <updated>2026-08-04T07:37:38.141Z</updated>
+    <updated>2026-08-04T12:30:00.758Z</updated>
   </entry>
   <entry>
     <author>
@@ -42,7 +58,7 @@
     <published>2026-07-20T02:14:48.000Z</published>
     <summary>📌设计模板，测试博客模板通用性</summary>
     <title>The second blog-example</title>
-    <updated>2026-08-04T07:37:38.142Z</updated>
+    <updated>2026-08-04T12:30:00.758Z</updated>
   </entry>
   <entry>
     <author>
@@ -60,6 +76,6 @@
     <published>2026-07-20T01:49:46.000Z</published>
     <summary>记录我的技术学习、项目实践与成长历程。</summary>
     <title>The first blog!</title>
-    <updated>2026-08-04T07:37:38.142Z</updated>
+    <updated>2026-08-04T12:30:00.758Z</updated>
   </entry>
 </feed>
