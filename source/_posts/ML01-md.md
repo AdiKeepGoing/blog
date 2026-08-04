@@ -8,7 +8,7 @@ tags:
   - null
 description: 📌开始机器学习方面理论知识的了解
 date: 2026-08-04 15:39:56
-katex: true
+mathjax: true
 ---
 
 # ML01
