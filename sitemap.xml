@@ -11,6 +11,24 @@
   </url>
   
   <url>
+    <loc>https://missadi.cc/live2dw/assets/hijiki.model.json</loc>
+    
+    <lastmod>2026-08-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://missadi.cc/live2dw/assets/hijiki.pose.json</loc>
+    
+    <lastmod>2026-08-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://missadi.cc/2026/08/04/ML01-md/</loc>
     
     <lastmod>2026-08-04</lastmod>
@@ -47,15 +65,6 @@
   </url>
   
   <url>
-    <loc>https://missadi.cc/about/index.html</loc>
-    
-    <lastmod>2026-08-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://missadi.cc/archives/index.html</loc>
     
     <lastmod>2026-08-04</lastmod>
@@ -65,25 +74,16 @@
   </url>
   
   <url>
+    <loc>https://missadi.cc/about/index.html</loc>
+    
+    <lastmod>2026-08-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://missadi.cc/categories/index.html</loc>
-    
-    <lastmod>2026-08-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://missadi.cc/live2dw/assets/hijiki.model.json</loc>
-    
-    <lastmod>2026-08-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://missadi.cc/live2dw/assets/hijiki.pose.json</loc>
     
     <lastmod>2026-08-04</lastmod>
     
