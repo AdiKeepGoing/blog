@@ -1,5 +1,5 @@
 ---
-title: NextPlan.md
+title: NextPlan
 categories:
   - 学习规划
 tags:
