@@ -13,6 +13,7 @@ tags:
   - 
   -
 description: 📌
+mathjax: true
 ---
 
 # 标题
