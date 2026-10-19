@@ -6,7 +6,7 @@ tags:
   - AIGC
   - 静态泛化
   - 动态适应
-description: 📌Fleet: Few Shots Lead Effective AI-generated Image Detection(ICML 2026,中科院计算所)
+description:📌Fleet: Few Shots Lead Effective AI-generated Image Detection(ICML 2026,中科院计算所)
 date: 2026-09-21 17:27:32
 mathjax: true
 ---
