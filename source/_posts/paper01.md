@@ -7,17 +7,9 @@ tags:
   - 静态泛化
   - 动态适应
 description:📌Fleet: Few Shots Lead Effective AI-generated Image Detection(ICML 2026,中科院计算所)
-date: 2026-09-21 17:27:32
 mathjax: true
+date: 2026-09-21 17:27:32
 ---
-
-~~~
-对论文的解读分为以下四个方面：
-背景
-贡献
-方法
-实验
-~~~
 
 ### 相关概念
 
