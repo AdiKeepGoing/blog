@@ -111,16 +111,22 @@ live2d:
     opacityDefault: 0.9
     opacityOnHover: 1.0
 
+# Server-side formula rendering. AMS supplies environments and commands such as
+# aligned, bmatrix, \tag, \operatorname and \xrightarrow used by study notes.
+mathjax:
+  tags: none
+  packages:
+    - ams
+
 # 字数统计 & 阅读时长
-  symbols_count_time:
-    symbols: true          # 每篇博客显示字数
-    time: true             # 每篇博客显示阅读时长
-    total_symbols: true    # 页脚显示全站总字数
-    total_time: true       # 页脚显示全站总阅读时长
-    exclude_codeblock: false  # 代码块是否不计入统计
-    awl: 4                 # 平均词长 (Average Word Length)，中文为 2
-    wpm: 275               # 每分钟阅读字数 (Words Per Minute)
-    suffix: mins           # 分钟的后缀文字
+symbols_count_time:
+  symbols: true          # 每篇博客显示字数
+  time: true             # 每篇博客显示阅读时长
+  total_symbols: true    # 页脚显示全站总字数
+  total_time: true       # 页脚显示全站总阅读时长
+  exclude_codeblock: false  # 代码块是否不计入统计
+  wpm: 275               # 每分钟阅读字数 (Words Per Minute)
+  suffix: mins           # 分钟的后缀文字
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/

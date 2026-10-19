@@ -1,12 +1,12 @@
 ---
-title: paper01
+title: "论文阅读 01：Fleet 少样本 AI 生成图像检测"
 categories:
   - 文章阅读
 tags:
   - AIGC
   - 静态泛化
   - 动态适应
-description:📌Fleet: Few Shots Lead Effective AI-generated Image Detection(ICML 2026,中科院计算所)
+description: "📌 Fleet：Few Shots Lead Effective AI-generated Image Detection（ICML 2026，中科院计算所）"
 mathjax: true
 date: 2026-09-21 17:27:32
 ---
@@ -80,7 +80,7 @@ x_t;
 \right)
 $$
 
-给上一时刻的图片 \(x_{t-1}\) 加一点高斯噪声，得到 \(x_t)，β__t可以理解为第t步要加多少噪声。
+给上一时刻的图片 \(x_{t-1}\) 加一点高斯噪声，得到 \(x_t\)，\(\beta_t\) 可以理解为第 \(t\) 步要加多少噪声。
 
 ε=随机高斯噪声。
 $$
@@ -1185,7 +1185,7 @@ $$
 
 * 专门处理高频图像的**卷积特征提取器**：$E_{\mathrm{freq}}$（论文实现中采用的是 **Xception**）。由卷积特征提取器得到**路由信号**：$r_{\mathrm{freq}} = E_{\mathrm{freq}}(X_{\mathrm{high}}) \in\mathbb R^d$.
 
-* 并不是直接转换成路由信号，而是经过了一个**投影层**：Proj：将Xception 输出的特征转换成固定的 $d$ 维路由信号：$text{Xception 特征} \xrightarrow{\mathrm{Proj}} r_{\mathrm{freq}}\in\mathbb R^d$.
+* 并不是直接转换成路由信号，而是经过了一个**投影层**：Proj 将 Xception 输出的特征转换成固定的 $d$ 维路由信号：$\text{Xception 特征} \xrightarrow{\mathrm{Proj}} r_{\mathrm{freq}}\in\mathbb R^d$。
 
 * 视觉编码器 $E_{\mathrm{vis}}$：即是DINOv3：$z=E_{\mathrm{vis}}\left(x;\theta_{\mathrm{dino}}+\Delta\theta_{\mathrm{lora}}\right)$.为了**避免少量样本破坏 DINOv3 原来的知识，论文冻结其主体参数，只通过 LoRA 对它进行轻量调整**。如果直接微调整个大型模型，需要更新大量参数，而且少量样本很容易造成**过拟合**和**灾难性遗忘**。
 
@@ -1210,7 +1210,7 @@ $$
 
 * 拼接：$ u = \operatorname{Concat} (\alpha_1s_1,\alpha_2s_2,\alpha_3s_3,\alpha_4s_4)$.
 
-* 投影网络 \(P)：$h_{\mathrm{final}}=P(u)$.，这里P如何知道应该怎样融合:(P\) 一开始是随机初始化的，并不知道哪些特征重要。
+* 投影网络 \(P\)：$h_{\mathrm{final}}=P(u)$。这里 \(P\) 一开始是随机初始化的，并不知道哪些特征重要。
   训练时，根据 $h_{\mathrm{final}}$计算分类损失：$h_{\mathrm{final}}\longrightarrow
   L_{\mathrm{cls}}.$然后反向传播：$L_{\mathrm{cls}}
   \longrightarrow

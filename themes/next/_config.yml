@@ -579,7 +579,8 @@ math:
     tags: none
 
   katex:
-    enable: true
+    # Formulas are rendered server-side by hexo-filter-mathjax.
+    enable: false
     # See: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex
     copy_tex: true
 
