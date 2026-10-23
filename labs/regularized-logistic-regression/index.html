@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="可交互的正则化逻辑回归与梯度下降教学实验" />
+    <title>正则化逻辑回归 · 梯度下降实验室</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#lab" aria-label="返回实验台顶部">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>ML / LAB <small>04</small></span>
+      </a>
+      <nav aria-label="页面导航">
+        <a href="#lab">实验台</a>
+        <a href="#method">数据与方法</a>
+        <a href="#guide">观察指南</a>
+      </nav>
+      <div class="status-chip"><span></span> 浏览器内实时训练</div>
+    </header>
+
+    <main>
+      <section class="hero" id="lab">
+        <div class="hero-copy">
+          <p class="eyebrow">INTERACTIVE ML NOTEBOOK · 交互式机器学习笔记</p>
+          <h1>把正则化<br /><em>看见。</em></h1>
+          <p class="hero-lede">拖动 λ、切换梯度策略与特征空间。每次点击都真正执行一次逻辑回归训练，不是预录动画。</p>
+        </div>
+        <div class="hero-note" aria-label="本实验核心问题">
+          <span>本次实验问题</span>
+          <strong>模型边界何时弯曲，<br />又为何变得平滑？</strong>
+          <p>从同一批带噪数据出发，仅改变优化方法、特征与正则强度。</p>
+        </div>
+      </section>
+
+      <section class="lab-shell" aria-label="交互实验台">
+        <div class="lab-heading">
+          <div>
+            <span class="section-no">01</span>
+            <div>
+              <p class="kicker">LIVE EXPERIMENT</p>
+              <h2>决策边界训练台</h2>
+            </div>
+          </div>
+          <div class="legend" aria-label="图例">
+            <span><i class="dot dot-coral"></i>类别 1</span>
+            <span><i class="dot dot-blue"></i>类别 0</span>
+            <span><i class="ring"></i>测试集</span>
+            <span><i class="line-solid"></i>模型边界</span>
+            <span><i class="line-dash"></i>生成真边界</span>
+          </div>
+        </div>
+
+        <div class="workspace">
+          <div class="plot-card">
+            <div class="plot-meta">
+              <div>
+                <span>DECISION SURFACE</span>
+                <h3 id="plotTitle">二次特征 · 等待训练</h3>
+              </div>
+              <label class="toggle"><input id="truthToggle" type="checkbox" checked /><span></span>显示真边界</label>
+            </div>
+            <div class="canvas-wrap main-canvas-wrap">
+              <canvas id="boundaryCanvas" aria-label="数据散点与决策边界图"></canvas>
+              <div id="plotHint" class="plot-hint">点击「开始训练」观察边界生长</div>
+            </div>
+            <div class="axis-note"><span>x₁ · 标准化前的原始特征</span><span>x₂ ↑</span></div>
+          </div>
+
+          <aside class="metrics-card" aria-label="实时训练指标">
+            <div class="metrics-head">
+              <span>TRAINING LOG</span>
+              <div class="pulse" id="pulse"><i></i><b id="runState">READY</b></div>
+            </div>
+            <div class="metric-grid">
+              <div><span>训练损失</span><strong id="trainLoss">0.693</strong><small>交叉熵，不含 L2</small></div>
+              <div><span>测试损失</span><strong id="testLoss">0.693</strong><small>越低越好</small></div>
+              <div><span>损失差距</span><strong id="lossGap">0.000</strong><small>测试 − 训练</small></div>
+              <div><span>训练准确率</span><strong id="trainAcc">—</strong><small>决策阈值 0.5</small></div>
+              <div><span>测试准确率</span><strong id="testAcc">—</strong><small>未参与更新</small></div>
+              <div><span>权重范数</span><strong id="weightNorm">0.000</strong><small>‖w‖，不含偏置</small></div>
+            </div>
+            <div class="diagnosis" id="diagnosis" data-level="neutral">
+              <div><span>实时判断</span><b id="diagnosisTitle">还没有足够证据</b></div>
+              <p id="diagnosisText">先训练几轮，再同时观察两条损失曲线、准确率差距和权重范数。</p>
+            </div>
+            <div class="loss-block">
+              <div class="loss-title"><span>损失轨迹</span><b id="epochLabel">0.00 epoch</b></div>
+              <div class="canvas-wrap loss-canvas-wrap"><canvas id="lossCanvas" aria-label="训练与测试损失曲线"></canvas></div>
+              <div class="loss-legend"><span><i class="train-line"></i>训练损失</span><span><i class="test-line"></i>测试损失</span></div>
+            </div>
+            <div class="gradient-block">
+              <div class="loss-title"><span>当前梯度</span><b id="gradNorm">‖∇J‖ = 0.000</b></div>
+              <div id="gradientBars" class="gradient-bars"></div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="control-deck">
+          <section class="control-group">
+            <div class="control-title"><span>01</span><div><b>梯度策略</b><small>一次用多少训练样本</small></div></div>
+            <div class="segmented three" id="optimizerControl">
+              <button data-value="batch" aria-pressed="true"><b>批量</b><small>稳定</small></button>
+              <button data-value="mini" aria-pressed="false"><b>小批量</b><small>均衡</small></button>
+              <button data-value="sgd" aria-pressed="false"><b>随机</b><small>抖动</small></button>
+            </div>
+          </section>
+
+          <section class="control-group">
+            <div class="control-title"><span>02</span><div><b>特征空间</b><small>决定边界能否弯曲</small></div></div>
+            <div class="segmented three" id="modelControl">
+              <button data-value="linear" aria-pressed="false"><b>线性</b><small>x₁, x₂</small></button>
+              <button data-value="quadratic" aria-pressed="true"><b>二次</b><small>+ x₁², x₁x₂, x₂²</small></button>
+              <button data-value="degree6" aria-pressed="false"><b>六次</b><small>28 个参数</small></button>
+            </div>
+          </section>
+
+          <section class="control-group lambda-group">
+            <div class="control-title"><span>03</span><div><b>正则强度 λ</b><small>惩罚权重，不惩罚偏置</small></div><output id="lambdaValue">0.10</output></div>
+            <input id="lambdaSlider" type="range" min="0" max="5" step="1" value="2" aria-label="正则化强度 lambda" />
+            <div class="range-labels"><span>0</span><span>.01</span><span>.1</span><span>1</span><span>10</span><span>100</span></div>
+          </section>
+
+          <section class="control-group epoch-group">
+            <div class="control-title"><span>04</span><div><b>训练轮数</b><small>达到目标后自动停止</small></div><output id="targetEpochValue">60</output></div>
+            <div class="segmented five" id="epochControl">
+              <button data-value="10" aria-pressed="false"><b>10</b><small>快速</small></button>
+              <button data-value="30" aria-pressed="false"><b>30</b><small>观察</small></button>
+              <button data-value="60" aria-pressed="true"><b>60</b><small>推荐</small></button>
+              <button data-value="100" aria-pressed="false"><b>100</b><small>充分</small></button>
+              <button data-value="200" aria-pressed="false"><b>200</b><small>过拟合</small></button>
+            </div>
+          </section>
+        </div>
+
+        <div class="transport">
+          <button class="primary-btn" id="runButton"><span class="play-icon" aria-hidden="true"></span><b>开始训练</b></button>
+          <button class="secondary-btn" id="stepButton">单步更新</button>
+          <button class="secondary-btn" id="resetButton">重置模型</button>
+          <div class="speed-control" id="speedControl"><span>动画速度</span><button data-value="1" aria-pressed="true">1×</button><button data-value="4" aria-pressed="false">4×</button><button data-value="12" aria-pressed="false">12×</button></div>
+          <div class="epoch-progress" aria-label="训练进度">
+            <div><i id="progressFill"></i></div>
+            <p id="iterationLabel">0.00 / 60 epoch · 更新 0 次</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="method-section" id="method">
+        <div class="section-intro">
+          <span class="section-no">02</span>
+          <div><p class="kicker">DATA PROTOCOL</p><h2>数据怎样被构建？</h2><p>实验数据可复现，但不会“整齐得不真实”。每个标签来自概率采样，因此边界附近自然存在重叠。</p></div>
+        </div>
+
+        <div class="method-grid">
+          <article class="formula-card">
+            <span class="card-label">GENERATIVE PROCESS</span>
+            <h3>先生成特征，再按概率决定标签</h3>
+            <div class="formula">p(y=1|x) = σ<span>(</span><b>x₂ − 0.42x₁² + 0.08x₁ + 0.65</b><span>)/τ</span></div>
+            <p>x₁、x₂ 来自截断高斯分布；τ 由“数据噪声”控制。τ 越高，边界附近两类样本越容易交叠。</p>
+            <div class="protocol-row"><span><b>75%</b> 分层训练集</span><span><b>25%</b> 独立测试集</span><span><b>Train-only</b> 标准化</span></div>
+          </article>
+
+          <article class="data-control-card">
+            <div class="data-card-head"><span class="card-label">REPRODUCIBLE RANDOMNESS</span><b id="splitCounts">120 train / 40 test</b></div>
+            <h3>先用默认数据理解模型，<br />需要时再展开高级设置。</h3>
+            <p class="data-note"><i></i>同一种子会重现完全相同的数据、标签与划分，便于公平比较不同 λ 和模型。</p>
+            <details class="advanced-data">
+              <summary><span>数据与步长设置</span><small>样本、噪声、标签错误、学习率、早停</small></summary>
+              <div class="field-row four">
+                <label>样本量 <output id="sampleValue">160</output><input id="sampleSlider" type="range" min="80" max="280" step="20" value="160" /></label>
+                <label>数据噪声 τ <output id="noiseValue">0.24</output><input id="noiseSlider" type="range" min="0.10" max="0.50" step="0.02" value="0.24" /></label>
+                <label>学习率 α <output id="lrValue">0.18</output><input id="lrSlider" type="range" min="0.02" max="0.42" step="0.01" value="0.18" aria-label="学习率 alpha" /></label>
+                <label>标签翻转 <output id="flipValue">0%</output><input id="flipSlider" type="range" min="0" max="0.16" step="0.02" value="0" /></label>
+              </div>
+              <div class="seed-row"><label for="seedInput">随机种子</label><input id="seedInput" type="number" min="1" max="999999" value="42" /><button id="regenerateButton">按此种子重新生成</button><button id="newSeedButton" title="使用下一个种子">换一批</button></div>
+              <label class="early-stop-toggle"><input id="earlyStopToggle" type="checkbox" checked /><span></span><b>自动早停</b><small>普通实验建议开启；观察完整过拟合过程时关闭。</small></label>
+            </details>
+          </article>
+        </div>
+
+        <div class="principle-strip">
+          <div><span>①</span><b>仅训练集参与梯度</b><p>测试集从不参与参数更新。</p></div>
+          <div><span>②</span><b>偏置项不正则化</b><p>L2 只收缩特征权重。</p></div>
+          <div><span>③</span><b>交叉熵 + L2</b><p>训练目标含 L2；图中损失不含惩罚，便于训练/测试公平比较。</p></div>
+          <div><span>④</span><b>早停可开关</b><p>普通实验开启；过拟合演示关闭并固定训练轮数。</p></div>
+        </div>
+      </section>
+
+      <section class="reading-section" aria-label="过拟合判断与参数影响">
+        <div class="section-intro">
+          <span class="section-no">03</span>
+          <div><p class="kicker">BEGINNER'S MAP</p><h2>不要只看边界：这样判断过拟合</h2><p>单个指标没有通用阈值。最可靠的是在同一数据、同一特征空间下做对照，并寻找多个信号同时出现。</p></div>
+        </div>
+        <div class="signal-grid">
+          <article><span>强信号</span><h3>训练损失 ↓，测试损失 ↑</h3><p>模型继续迎合训练样本，但对没见过的数据变差。这是最典型的过拟合轨迹。</p></article>
+          <article><span>强信号</span><h3>训练准确率高，测试准确率低</h3><p>两者差距称为“泛化差距”。差距持续扩大，比单看某个准确率更有意义。</p></article>
+          <article><span>比较指标</span><h3>权重范数 ‖w‖ 很大</h3><p>说明模型依赖更极端的参数。请只在相同数据和特征尺度下比较；λ 增大通常会把它压小。</p></article>
+          <article><span>辅助证据</span><h3>边界出现不必要的弯曲</h3><p>弯曲本身不等于过拟合；真实规律也可能是弯的。必须结合测试损失和泛化差距判断。</p></article>
+        </div>
+
+        <div class="parameter-map">
+          <div class="parameter-map-head"><p class="kicker">CAUSE → EFFECT</p><h3>参数改变后，先影响什么？</h3></div>
+          <div class="parameter-row"><b>λ 正则强度</b><span>λ ↑</span><i>→</i><span>权重 ‖w‖ ↓</span><i>→</i><span>边界通常更平滑</span><small>适量可减轻过拟合；过大会欠拟合。</small></div>
+          <div class="parameter-row"><b>特征次数</b><span>次数 ↑</span><i>→</i><span>参数数量 ↑</span><i>→</i><span>可拟合更复杂边界</span><small>表达力更强，也更容易追随噪声。</small></div>
+          <div class="parameter-row"><b>样本量</b><span>样本 ↑</span><i>→</i><span>估计更稳定</span><i>→</i><span>泛化通常更好</span><small>小数据配复杂模型更容易过拟合。</small></div>
+          <div class="parameter-row"><b>噪声 / 标签翻转</b><span>噪声 ↑</span><i>→</i><span>矛盾样本 ↑</span><i>→</i><span>测试更困难</span><small>标签翻转模拟测量或标注错误。</small></div>
+          <div class="parameter-row"><b>训练轮数</b><span>轮数 ↑</span><i>→</i><span>训练损失继续降</span><i>→</i><span>测试损失可能回升</span><small>轮数本身不是越多越好。</small></div>
+          <div class="parameter-row"><b>学习率 α</b><span>α ↑</span><i>→</i><span>每步更大</span><i>→</i><span>更快或震荡</span><small>它主要影响优化过程，不直接控制模型复杂度。</small></div>
+        </div>
+      </section>
+
+      <section class="guide-section" id="guide">
+        <div class="section-intro light">
+          <span class="section-no">04</span>
+          <div><p class="kicker">OBSERVATION GUIDE</p><h2>建议这样做四组对照</h2><p>想看实现细节？下载带中文说明的纯 HTML / CSS / JavaScript 源码。</p><a class="source-download" href="./regularized-logistic-lab-source.zip" download>下载教学源码 ↓</a></div>
+        </div>
+        <div class="experiment-cards">
+          <article><span>A</span><div><h3>先看欠拟合</h3><p>保持 λ = 0.1，先选「线性」再训练。直线无法还原弯曲的真实边界，训练与测试准确率都会受限。</p><button data-preset="underfit">装载这组参数 →</button></div></article>
+          <article><span>B</span><div><h3>再看正则化</h3><p>选择「二次」，先试 λ = 0，再改为 0.1。观察边界稳定性、权重大小与测试损失。</p><button data-preset="balanced">装载这组参数 →</button></div></article>
+          <article><span>C</span><div><h3>最后看过度收缩</h3><p>将 λ 拉到 10。权重被强行压小，边界逐渐失去曲率；这是正则过强造成的欠拟合。</p><button data-preset="overregularized">装载这组参数 →</button></div></article>
+          <article class="featured"><span>D</span><div><h3>一键制造过拟合</h3><p>80 个样本、六次特征、12% 标签翻转、λ = 0，并关闭早停训练 200 轮。重点看训练与测试损失分叉。</p><button data-preset="overfit">装载并开始演示 →</button></div></article>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>REGULARIZED LOGISTIC REGRESSION</span><p>所有计算均在你的浏览器中完成 · 无需上传数据</p><div><a href="./regularized-logistic-lab-source.zip" download>下载源码 ↓</a><a href="#lab">回到实验台 ↑</a></div></footer>
+    <script src="./app.js"></script>
+  </body>
+</html>
