@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>https://missadi.cc/live2dw/assets/hijiki.pose.json</loc>
+    
+    <lastmod>2026-11-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://missadi.cc/live2dw/assets/hijiki.model.json</loc>
     
     <lastmod>2026-11-03</lastmod>
@@ -20,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://missadi.cc/live2dw/assets/hijiki.pose.json</loc>
+    <loc>https://missadi.cc/2026/10/31/paper02/</loc>
     
     <lastmod>2026-11-03</lastmod>
     
@@ -160,6 +169,20 @@
   </url>
   
   <url>
+    <loc>https://missadi.cc/tags/blog/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://missadi.cc/tags/test/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://missadi.cc/tags/%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -181,20 +204,6 @@
   </url>
   
   <url>
-    <loc>https://missadi.cc/tags/blog/</loc>
-    <lastmod>2026-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://missadi.cc/tags/test/</loc>
-    <lastmod>2026-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://missadi.cc/tags/AIGC/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -210,6 +219,20 @@
   
   <url>
     <loc>https://missadi.cc/tags/%E5%8A%A8%E6%80%81%E9%80%82%E5%BA%94/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://missadi.cc/tags/%E7%B1%BB%E5%A2%9E%E9%87%8F%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://missadi.cc/tags/Adapter-prototype/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
